@@ -1,0 +1,3 @@
+# 한 줄 추가만 하는 색인 파일: 로컬 merge/rebase 충돌 시 양쪽 줄을 모두 유지
+tracks/*/docs/lessons/INDEX.md merge=union
+docs/lessons/INDEX.md merge=union

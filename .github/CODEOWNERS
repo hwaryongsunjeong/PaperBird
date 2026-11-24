@@ -1,0 +1,14 @@
+# 공통 파일(contracts, harness 경로)의 owner = 팀장
+# 브랜치 보호에서 "Require review from Code Owners"를 켜야 머지가 실제로 막힌다.
+# TODO: 아래 <팀장-github-id>를 실제 GitHub 아이디로 바꾸고 주석을 해제한다.
+
+# /CLAUDE.md                 @<팀장-github-id>
+# /docs/SPEC.md              @<팀장-github-id>
+# /docs/BOUNDARIES.md        @<팀장-github-id>
+# /docs/conventions/         @<팀장-github-id>
+# /docs/lessons/             @<팀장-github-id>
+# /docs/STATUS.md            @<팀장-github-id>
+# /contracts/                @<팀장-github-id>
+# /.claude/                  @<팀장-github-id>
+# /.github/                  @<팀장-github-id>
+# /tracks/*/CLAUDE.md        @<팀장-github-id>
