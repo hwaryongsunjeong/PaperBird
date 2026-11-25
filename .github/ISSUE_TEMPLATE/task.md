@@ -5,7 +5,12 @@ title: ""
 labels: []
 ---
 
-<!-- 라벨: 트랙 라벨 하나(fullstack / infra / security / contracts / harness)를 반드시 붙인다 -->
+<!--
+라벨 (docs/BOUNDARIES.md §1)
+- 메인 라벨: 정확히 1개 — fullstack / infra / security / contracts / harness
+- 서브 라벨: 다른 트랙이 엮인 경우에만 — sub:fullstack / sub:infra / sub:security
+  예) 백엔드 기능 + 보안 엮임 → fullstack + sub:security
+-->
 
 ## 범위
 

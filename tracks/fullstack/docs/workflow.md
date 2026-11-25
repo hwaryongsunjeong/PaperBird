@@ -5,6 +5,8 @@
 
 ## 1. 모드와 스킬
 
+> 전 트랙 스킬 목록과 상태는 [스킬 스택](../../../.claude/skills/README.md)에서 관리한다.
+
 | 분류 | 스킬 | 역할 | 모델 자동 호출 |
 |---|---|---|---|
 | 모드 A 순차 | `/seq <이슈>` | 구현자 1명이 한 작업 수행 | 금지 |
@@ -46,7 +48,8 @@ gh auth status                # Token scopes에 'project'가 보이면 완료
 - [ ] 라벨 생성 (§3):
 
 ```bash
-for l in fullstack infra security contracts harness needs-design mode:seq mode:compare mode:parallel; do
+for l in fullstack infra security contracts harness sub:fullstack sub:infra sub:security \
+         needs-design mode:seq mode:compare mode:parallel mode:unleashed; do
   gh label create "$l" --force
 done
 ```
@@ -89,10 +92,12 @@ Status 자동화:
 
 | 라벨 | 용도 |
 |---|---|
-| `fullstack` | 트랙 라벨 ([BOUNDARIES](../../../docs/BOUNDARIES.md)) — 다른 트랙은 `infra`, `security` |
+| `fullstack` | **메인 라벨** — 담당 트랙 ([BOUNDARIES §1](../../../docs/BOUNDARIES.md)). 다른 트랙은 `infra`, `security`. 이슈당 정확히 1개 |
+| `sub:fullstack` / `sub:infra` / `sub:security` | **서브 라벨** — 기능이 엮인 다른 트랙. 엮이지 않으면 붙이지 않는다 |
 | `contracts` | 공개 API 계약 변경 (팀장 승인) |
-| `area:web` / `area:api` / `area:ai` | 보조 라벨 `[선택 확장]` |
+| `area:web` / `area:api` / `area:ai` | 영역 라벨 `[선택 확장]` |
 | `mode:seq` / `mode:compare` / `mode:parallel` | 현재 작업 모드 |
+| `mode:unleashed` | 목줄 해제 모드 (`/unleash` · `/leash`, 루트 CLAUDE.md §6) |
 | `harness` | 하네스 문서 수정 이슈 (팀장 승인) |
 | `needs-design` | `/back-to-design`으로 생성된 UX 이슈 |
 

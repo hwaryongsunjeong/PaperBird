@@ -57,16 +57,34 @@
 | [`docs/SPEC.md`](docs/SPEC.md) | 트랙별 확정 기술스택과 불변 규칙 |
 | [`docs/conventions/`](docs/conventions/) | 브랜치 / 커밋 / PR 컨벤션 |
 | `tracks/<트랙>/CLAUDE.md` | 트랙 전용 보완 규칙 |
-| `.claude/skills/` | 슬래시 명령 (현재 fullstack 워크플로우 12개 — [`tracks/fullstack/docs/workflow.md`](tracks/fullstack/docs/workflow.md)) |
+| [`.claude/skills/README.md`](.claude/skills/README.md) | 스킬 스택 — 전 트랙 슬래시 명령 목록·상태·등록 절차 |
 | `.github/` | PR·이슈 템플릿, CODEOWNERS |
 | `contracts/` | 공개 API 계약 |
 
 ## 5. 공통 작업 규칙
 
-- 작업 시작 전 GitHub Projects 이슈의 라벨을 확인하고, 해당 라벨의 BOUNDARIES 범위 밖 파일은 수정하지 않는다.
+- 작업 시작 전 GitHub Projects 이슈의 라벨을 확인한다. 메인 라벨 1개 + 서브 라벨(`sub:<트랙>`) 0개 이상이며, 두 라벨의 BOUNDARIES 범위 밖 파일은 수정하지 않는다 ([BOUNDARIES §1](docs/BOUNDARIES.md)).
 - 브랜치·커밋·PR은 `docs/conventions/`를 따른다.
 - 작업 종료 시 해당 트랙의 `docs/STATUS.md`를 갱신한다. 루트 `docs/STATUS.md`는 팀장만 수정한다.
 - 기능 작업 중 하네스 파일 수정이 필요하면 직접 고치지 않고 `harness` 이슈로 분리한다 ([BOUNDARIES §3](docs/BOUNDARIES.md)).
 - 공유 문서는 "한 파일 한 작성자" 또는 "항목마다 새 파일" 규칙을 따른다 ([BOUNDARIES §4](docs/BOUNDARIES.md)).
 - 진행 상황의 단일 기준은 GitHub Projects다.
 - TODO: 공통 lessons 승격 절차
+
+## 6. 목줄 해제 모드
+
+사람이 `/unleash`를 입력해 `.claude/unleashed` 파일이 있고 대상 티켓에 `mode:unleashed` 라벨이 있을 때만 적용한다. `/leash`로 해제한다 ([BOUNDARIES §5](docs/BOUNDARIES.md)).
+
+**풀리는 규칙**
+- BOUNDARIES 라벨 범위 제한 (트랙을 넘나들며 수정 가능)
+- 하네스 수정의 `harness` 이슈 분리 — 같은 PR에서 하네스 파일을 고칠 수 있다
+- 계획 승인 대기, 실패하는 테스트 먼저 작성
+- 모드 라벨, 트랙 STATUS·ADR 기록 (해제 시 `/leash`가 한 번에 정리)
+
+**풀리지 않는 규칙**
+- `.env`·시크릿 읽기·커밋 금지
+- force push, `git reset --hard`, `rm -rf` 등 되돌릴 수 없는 명령 금지
+- 에이전트의 머지 금지, `main`·`develop` 직접 push 금지
+- 실행하지 않은 검사를 통과로 보고하지 않는다
+- 되돌리기 어려운 변경(배포 설정, DB 스키마, 공개 API 계약)은 여전히 팀장 확인
+- 이 모드의 PR은 팀장 리뷰 필수
