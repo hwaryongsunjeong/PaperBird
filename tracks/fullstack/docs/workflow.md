@@ -181,8 +181,12 @@ gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
 | `apps/web` (Next.js) | `apps/web/package.json`의 `scripts` | `<패키지매니저> run <이름>` (apps/web에서) |
 | `apps/api` (NestJS) | `apps/api/package.json`의 `scripts` | `<패키지매니저> run <이름>` (apps/api에서) |
 | `apps/ai` (FastAPI) | `apps/ai/Makefile`의 같은 이름 타깃 | `make -C apps/ai <이름>` (`build`는 없어도 됨) |
+| `packages/*` (공유 패키지) | 각 패키지 `package.json`의 `scripts` | `pnpm --filter <패키지명> run <이름>` |
+| 전체 (TS) | 루트 `package.json` | `pnpm run <이름>` (루트에서, 워크스페이스 재귀) |
 
-- `[설계 필요]` 패키지 매니저(npm / pnpm)와 Python 도구(uv / poetry)는 `docs/SPEC.md`에서 확정한다.
+- 패키지 매니저는 pnpm, 도구(Vitest, Prettier, oxlint, web은 ESLint)는 `docs/SPEC.md` 기준. Python 도구(uv / poetry)는 `[설계 필요]`.
+- **경고도 실패로 처리한다.** lint는 경고가 있으면 exit 0이 아니어야 한다 (oxlint `--deny-warnings`). 경고만 내고 통과하면 `/finish`가 결함을 놓친다.
+- `format`은 빌드 산출물을 검사하지 않도록 각 패키지에 `.prettierignore`(`dist`, `node_modules`)를 둔다.
 - 앱이 생기면 위 표의 실행 명령이 그대로 동작하는지 한 번 확인하고, 이 절에서 `[설계 필요]`를 지운다.
 - `[선택 확장]` 같은 명령을 GitHub Actions(`.github/workflows/`)와 Stop 훅(검사 실패 시 세션 종료 차단)에서도 재사용한다.
 
