@@ -49,7 +49,7 @@ gh auth status                # Token scopes에 'project'가 보이면 완료
 
 ```bash
 for l in fullstack infra security contracts harness sub:fullstack sub:infra sub:security \
-         needs-design mode:seq mode:compare mode:parallel mode:unleashed; do
+         candidate needs-design mode:seq mode:compare mode:parallel mode:unleashed; do
   gh label create "$l" --force
 done
 ```
@@ -98,12 +98,13 @@ Status 자동화:
 | `area:web` / `area:api` / `area:ai` | 영역 라벨 `[선택 확장]` |
 | `mode:seq` / `mode:compare` / `mode:parallel` | 현재 작업 모드 |
 | `mode:unleashed` | 목줄 해제 모드 (`/unleash` · `/leash`, 루트 CLAUDE.md §6) |
+| `candidate` | 승인 전 후보 티켓 — 작업 금지 ([TICKET](../../../docs/conventions/TICKET.md)) |
 | `harness` | 하네스 문서 수정 이슈 (팀장 승인) |
 | `needs-design` | `/back-to-design`으로 생성된 UX 이슈 |
 
 ## 4. 작업 시작 조건
 
-이슈 본문에 다음 세 가지가 없으면 시작하지 않고 보완을 요청한다.
+`candidate` 라벨이 있으면(승인 전) 시작하지 않는다. 이슈 본문은 [TICKET](../../../docs/conventions/TICKET.md) 양식이며, 다음 세 가지가 없으면 시작하지 않고 보완을 요청한다.
 
 ```markdown
 ## 범위

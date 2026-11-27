@@ -38,6 +38,13 @@
 | `/unleash` | 모드 전환 | 초안 | 금지 | 이슈 번호 | `mode:unleashed` 라벨, `.claude/unleashed`, 이슈 코멘트 |
 | `/leash` | 모드 전환 | 초안 | 금지 | — | 규칙 밖 작업 정리표, 후속 이슈, 트랙 STATUS |
 
+### 공통 — 티켓 (기준: [`docs/conventions/TICKET.md`](../../docs/conventions/TICKET.md))
+
+| 스킬 | 분류 | 상태 | 자동 호출 | 입력 | 기록·출력 위치 |
+|---|---|---|---|---|---|
+| `/ticket` | 티켓 | 초안 | 허용 (생성 전 확인 필수) | 할 일 목록 (자유 서술) | `candidate` 이슈, 기존 이슈 댓글 |
+| `/triage` | 티켓 (팀장) | 초안 | 금지 | — | 라벨·Status·Iteration 변경, 병합·반려 댓글 |
+
 ### security
 
 | 스킬 | 목적 (초안) | 상태 | 자동 호출 | 입력 | 기록·출력 위치 |

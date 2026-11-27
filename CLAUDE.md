@@ -55,7 +55,7 @@
 | [`docs/STATUS.md`](docs/STATUS.md) | 전체 현재 상태 / 다음 작업 (트랙 STATUS 요약 + 링크) |
 | [`docs/BOUNDARIES.md`](docs/BOUNDARIES.md) | 라벨별 수정 가능 파일 범위 |
 | [`docs/SPEC.md`](docs/SPEC.md) | 트랙별 확정 기술스택과 불변 규칙 |
-| [`docs/conventions/`](docs/conventions/) | 브랜치 / 커밋 / PR 컨벤션 |
+| [`docs/conventions/`](docs/conventions/) | 브랜치 / 커밋 / PR / 티켓 컨벤션 |
 | `tracks/<트랙>/CLAUDE.md` | 트랙 전용 보완 규칙 |
 | [`.claude/skills/README.md`](.claude/skills/README.md) | 스킬 스택 — 전 트랙 슬래시 명령 목록·상태·등록 절차 |
 | `.github/` | PR·이슈 템플릿, CODEOWNERS |
@@ -69,6 +69,7 @@
 - 기능 작업 중 하네스 파일 수정이 필요하면 직접 고치지 않고 `harness` 이슈로 분리한다 ([BOUNDARIES §3](docs/BOUNDARIES.md)).
 - 공유 문서는 "한 파일 한 작성자" 또는 "항목마다 새 파일" 규칙을 따른다 ([BOUNDARIES §4](docs/BOUNDARIES.md)).
 - 진행 상황의 단일 기준은 GitHub Projects다.
+- 티켓은 [`docs/conventions/TICKET.md`](docs/conventions/TICKET.md) 양식으로, 항상 `candidate` 라벨을 붙여 만든다. 금요일 팀장 승인(`/triage`) 전에는 그 티켓으로 작업하지 않는다.
 - TODO: 공통 lessons 승격 절차
 
 ## 6. 목줄 해제 모드

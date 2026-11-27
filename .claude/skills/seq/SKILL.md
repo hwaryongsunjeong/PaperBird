@@ -17,7 +17,7 @@ disable-model-invocation: true
 ## 1. 이슈 확인
 1. `gh issue view $ARGUMENTS --json number,title,body,labels,state,projectItems`
 2. 본문에 `범위` / `범위 밖` / `수용 기준`이 없으면 **중단**하고 보완을 요청한다.
-3. 라벨 확인 (BOUNDARIES §1): 메인 라벨이 `fullstack` 1개인지, 서브 라벨(`sub:*`)이 있는지 본다. 메인 라벨이 없거나 2개 이상이면 중단하고 사람에게 확인한다. `mode:unleashed`이면 `/seq`가 아니라 해제 모드로 진행 중이므로 멈추고 알린다.
+3. 라벨 확인 (BOUNDARIES §1): 메인 라벨이 `fullstack` 1개인지, 서브 라벨(`sub:*`)이 있는지 본다. 메인 라벨이 없거나 2개 이상이면 중단하고 사람에게 확인한다. `mode:unleashed`이면 `/seq`가 아니라 해제 모드로 진행 중이므로 멈추고 알린다. `candidate` 라벨이 있으면 아직 승인 전이므로 멈춘다.
 
 ## 2. 모드 기록
 - `gh issue edit $ARGUMENTS --add-label "mode:seq"` (다른 `mode:*` 라벨은 제거)

@@ -17,7 +17,7 @@ disable-model-invocation: true
 - `tracks/fullstack/docs/STATUS.md`, `tracks/fullstack/docs/lessons/INDEX.md`
 
 ## 1. 충돌 분석
-1. 각 이슈를 읽고 건드릴 파일을 추정한다. 시작 조건(범위/범위 밖/수용 기준)이 없거나, 메인 라벨이 1개가 아니거나, `mode:unleashed`인 이슈는 제외한다.
+1. 각 이슈를 읽고 건드릴 파일을 추정한다. 시작 조건(범위/범위 밖/수용 기준)이 없거나, 메인 라벨이 1개가 아니거나, `mode:unleashed`이거나, `candidate`(승인 전)인 이슈는 제외한다.
 2. 파일이 겹치는 이슈끼리는 순서대로 처리한다.
 3. workflow.md §7 직렬화 대상을 건드리는 이슈는 병렬로 돌리지 않는다.
 4. 배정 계획(병렬 묶음, 직렬 순서)을 사람에게 보여준다.
