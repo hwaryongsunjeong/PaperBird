@@ -1,0 +1,14 @@
+{
+  "name": "paperbird",
+  "private": true,
+  "description": "PaperBird pnpm 워크스페이스 루트 — 앱(apps/*)과 공유 패키지(packages/*)를 묶는다",
+  "packageManager": "pnpm@10.33.2",
+  "scripts": {
+    "format": "pnpm -r --if-present run format",
+    "format:fix": "pnpm -r --if-present run format:fix",
+    "lint": "pnpm -r --if-present run lint",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "test": "pnpm -r --if-present run test",
+    "build": "pnpm -r --if-present run build"
+  }
+}

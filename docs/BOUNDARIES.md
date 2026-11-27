@@ -61,8 +61,10 @@
 - `tracks/*/CLAUDE.md` — 트랙 하네스라도 공통 규칙과 충돌할 수 있으므로 같은 절차를 따른다
 - `.github/**` (PR·이슈 템플릿, CODEOWNERS, 워크플로우)
 - `.gitattributes`
+- 루트 `package.json`, `pnpm-workspace.yaml` (pnpm 워크스페이스 설정)
 
 ### 모든 라벨이 쓸 수 있는 공유 경로 (§4 쓰기 규칙 적용)
+- `pnpm-lock.yaml` — 의존성을 바꾼 작업이면 어느 트랙이든 수정한다. 직렬화 대상이라 `/parallel`에서 동시에 바꾸지 않는다 (`tracks/fullstack/docs/workflow.md` §7)
 - `docs/journal/` — 새 파일 추가만 가능, 남의 파일 수정 금지
 - `tracks/<자기 트랙>/docs/STATUS.md`
 
