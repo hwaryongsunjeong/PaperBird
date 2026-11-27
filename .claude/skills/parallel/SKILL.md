@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 대상 이슈: `$ARGUMENTS`
 
+> 인자의 `#`은 떼고 숫자만 쓴다 (예: `#10` → `10`). 셸에서 `#`은 주석이다 — workflow.md §2.
+
 이 세션은 **오케스트레이터**다. 코드를 직접 구현하지 않는다.
 
 ## 0. 먼저 읽기
@@ -23,7 +25,7 @@ disable-model-invocation: true
 4. 배정 계획(병렬 묶음, 직렬 순서)을 사람에게 보여준다.
 
 ## 2. 구현자 배정
-- 각 이슈에 `mode:parallel` 라벨, Status `In Progress`.
+- 각 이슈에 `mode:parallel` 라벨, Status `In progress`.
 - **이슈 1개 = 워크트리 1개 = 브랜치 1개 = PR 1개.**
 - 구현자 브리프는 단독으로 이해되게 쓰고, 다음을 포함한다:
   - 동작·보안·데이터 결정은 직접 하지 말고 질문으로 올릴 것

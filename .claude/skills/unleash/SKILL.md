@@ -9,11 +9,13 @@ disable-model-invocation: true
 
 대상 이슈: `$ARGUMENTS`
 
+> 인자의 `#`은 떼고 숫자만 쓴다 (예: `#10` → `10`). 셸에서 `#`은 주석이다 — workflow.md §2.
+
 풀리는 규칙과 풀리지 않는 규칙은 루트 `CLAUDE.md` §6이 기준이다. 이 스킬은 그 범위를 넓히지 않는다.
 
 ## 1. 확인
 1. `.claude/unleashed`가 이미 있으면 내용을 보여주고 멈춘다. 한 번에 하나의 해제만 허용한다.
-2. `gh issue view $ARGUMENTS --json number,title,body,labels` — 이슈가 없으면 멈춘다.
+2. `gh issue view <번호> --json number,title,body,labels` — 이슈가 없으면 멈춘다. `candidate` 라벨이 있으면 승인 전이므로 멈춘다.
 3. 메인 라벨(`fullstack`/`infra`/`security`/`contracts`/`harness`)이 정확히 1개인지 확인한다. 없으면 사람에게 무엇을 붙일지 묻는다 — 브랜치·커밋 이름에 필요하다.
 4. 왜 해제가 필요한지 한 문장으로 사람에게 확인받는다.
 
@@ -28,7 +30,7 @@ start_sha: <git rev-parse origin/develop>
 reason: <사람이 확인한 사유>
 ```
 
-3. 이슈에 코멘트: "목줄 해제 시작 — 사유: ..., 기준 SHA: ...".
+3. Projects Status를 `In progress`로 바꾸고, 이슈에 코멘트: "목줄 해제 시작 — 사유: ..., 기준 SHA: ...".
 4. 브랜치를 만든다: `<type>/<메인 라벨>/<설명>` (최신 `origin/develop`에서).
 
 ## 3. 해제 중 규칙

@@ -9,7 +9,7 @@ description: [fullstack] 읽기 전용 상태 보고 — 트랙 STATUS와 GitHub
 
 1. `tracks/fullstack/docs/STATUS.md`를 읽는다.
 2. GitHub에 접근 가능하면:
-   - `gh project item-list <NUM> --owner <OWNER> --format json` — `fullstack` 라벨 항목의 Status
+   - `gh project item-list 2 --owner hwaryongsunjeong --format json` — 라벨 항목의 Status·Iteration (workflow.md §2)
    - `gh issue list --label fullstack --state open --json number,title,labels`
    - `gh pr list --base develop --json number,title,headRefName,isDraft,statusCheckRollup,reviewDecision`
 3. 네 묶음으로 보고한다:

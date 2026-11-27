@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 대상 이슈: `$ARGUMENTS`
 
+> 인자의 `#`은 떼고 숫자만 쓴다 (예: `#10` → `10`). 셸에서 `#`은 주석이다 — workflow.md §2.
+
 ## 0. 먼저 읽기
 - 루트 `CLAUDE.md`, `tracks/fullstack/CLAUDE.md`, `docs/BOUNDARIES.md`, `docs/SPEC.md`
 - `tracks/fullstack/docs/workflow.md` — GitHub Projects 명령, 라벨, 검사, 기록 위치
@@ -17,19 +19,20 @@ disable-model-invocation: true
 ## 1. 이슈 확인
 1. `gh issue view $ARGUMENTS --json number,title,body,labels,state,projectItems`
 2. 본문에 `범위` / `범위 밖` / `수용 기준`이 없으면 **중단**하고 보완을 요청한다.
-3. 라벨 확인 (BOUNDARIES §1): 메인 라벨이 `fullstack` 1개인지, 서브 라벨(`sub:*`)이 있는지 본다. 메인 라벨이 없거나 2개 이상이면 중단하고 사람에게 확인한다. `mode:unleashed`이면 `/seq`가 아니라 해제 모드로 진행 중이므로 멈추고 알린다. `candidate` 라벨이 있으면 아직 승인 전이므로 멈춘다.
+3. 라벨 확인 (BOUNDARIES §1): 메인 라벨이 1개이고 `fullstack` 또는 `harness`인지, 서브 라벨(`sub:*`)이 있는지 본다. 메인 라벨이 없거나 2개 이상이면 중단하고 사람에게 확인한다. `mode:unleashed`이면 `/seq`가 아니라 해제 모드로 진행 중이므로 멈추고 알린다. `candidate` 라벨이 있으면 아직 승인 전이므로 멈춘다.
+4. 메인 라벨이 `harness`이면 하네스 작업이다: 브랜치 트랙은 `harness`, 커밋 scope는 `harness`, 수정 범위는 BOUNDARIES §2 `harness` 경로다. 계획 제시 때 "이 PR은 팀장 승인(Code Owner 리뷰)이 필요하다"고 표시하고, PR 본문의 "팀장 승인 필요"를 체크한다.
 
 ## 2. 모드 기록
 - `gh issue edit $ARGUMENTS --add-label "mode:seq"` (다른 `mode:*` 라벨은 제거)
-- Projects Status를 `In Progress`로 변경 (workflow.md §2)
+- Projects Status를 `In progress`로 변경 (workflow.md §2 "필드 바꾸는 명령")
 
 ## 3. 브랜치
-- `git fetch origin && git switch -c <type>/fullstack/<설명> origin/develop`
+- `git fetch origin && git switch -c <type>/<메인 라벨>/<설명> origin/develop`
 
 ## 4. 계획 제시 (한국어)
 - 구현 계획과 **변경 파일 목록**을 제시한다.
-- 변경 파일이 BOUNDARIES의 허용 범위(메인 `fullstack` 경로 + 서브 라벨 트랙 경로) 밖이면 중단한다. 다른 트랙이 엮여 있는데 서브 라벨이 없으면 서브 라벨 추가를 사람에게 제안한다.
-- 변경 파일에 `harness` 경로가 있으면 중단하고 `harness` 이슈 분리를 제안한다 (BOUNDARIES §3).
+- 변경 파일이 BOUNDARIES의 허용 범위(메인 라벨 경로 + 서브 라벨 트랙 경로) 밖이면 중단한다. 다른 트랙이 엮여 있는데 서브 라벨이 없으면 서브 라벨 추가를 사람에게 제안한다.
+- 메인 라벨이 `fullstack`인데 변경 파일에 `harness` 경로가 있으면 중단하고 `harness` 이슈 분리를 제안한다 (BOUNDARIES §3).
 - 동작·보안·데이터에 영향을 주는 변경이면 **사람의 승인 전에는 구현하지 않는다.**
 - 되돌리기 어려운 변경(DB 스키마, 공개 API 계약, 배포 설정)이면 팀장 확인 + ADR이 필요함을 알린다.
 

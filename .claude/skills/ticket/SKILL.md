@@ -43,7 +43,8 @@ gh issue create --title "[<메인>] <제목>" --label "<메인>,candidate[,sub:<
 ```
 
 - "기존 이슈에 합치기"로 정한 후보는 `gh issue comment <N> --body-file <파일>`로 내용을 보탠다.
-- Projects에 추가하고 다음 주 Iteration을 지정한다 (`tracks/fullstack/docs/workflow.md` §2 — Project 정보가 TODO면 이 단계는 건너뛰고 그 사실을 알린다).
+- 프로젝트 자동 추가로 보드에 `Backlog`로 들어간다. 들어가지 않았으면 직접 추가한다.
+- 보드의 `Size` 필드를 본문 크기(S/M/L)와 같게, `Iteration`을 다음 주로 지정한다 (`tracks/fullstack/docs/workflow.md` §2 "필드 바꾸는 명령"). 실패한 단계는 보고에 적는다.
 - 라벨이 저장소에 없어 실패하면 만들지 말고 알린다.
 
 ## 5. 보고

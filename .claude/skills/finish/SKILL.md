@@ -12,7 +12,8 @@ description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, dev
 
 ## 1. 범위 확인
 - `git diff --name-only origin/develop...HEAD`로 변경 파일을 확인한다.
-- 허용 범위(메인 라벨 경로 + 서브 라벨 트랙 경로) 밖 파일, `harness` 경로, 루트 `docs/STATUS.md`가 있으면 **중단**한다.
+- 허용 범위(메인 라벨 경로 + 서브 라벨 트랙 경로) 밖 파일, (메인 라벨이 `harness`가 아닌데) `harness` 경로, 루트 `docs/STATUS.md`가 있으면 **중단**한다.
+- 메인 라벨이 `harness`이면 커밋 scope·PR 제목을 `harness`로 쓰고, PR 본문의 "팀장 승인 필요"를 체크한다.
 - `mode:unleashed` 이슈이면 중단하지 않고, 범위 밖 파일 목록을 PR 본문에 적는다 (정리는 `/leash`).
 - 서브 라벨 트랙 경로를 수정했다면 커밋을 그 트랙 scope로 나누고, PR 본문에 서브 트랙 리뷰가 필요함을 적는다.
 
@@ -27,9 +28,9 @@ description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, dev
 - `mode:seq`이면 `tracks/fullstack/docs/STATUS.md`를 갱신한다. `mode:parallel` 구현자는 갱신하지 않는다.
 
 ## 4. 커밋·PR
-- 커밋: `<type>(fullstack): <요약>` — 한 커밋에 한 가지 변경 ([COMMIT_CONVENTION](../../../docs/conventions/COMMIT_CONVENTION.md))
+- 커밋: `<type>(<메인 라벨>): <요약>` — 한 커밋에 한 가지 변경 ([COMMIT_CONVENTION](../../../docs/conventions/COMMIT_CONVENTION.md))
 - `gh pr create --base develop` — 제목은 커밋 형식, 본문은 PR 템플릿 항목(변경 요약, 영향받는 트랙, 범위 확인, 테스트, 팀장 승인 필요 여부) + `관련 이슈: #<번호>`
-- Projects Status를 `In Review`로 변경
+- Projects Status를 `In review`로 변경 (workflow.md §2)
 
 ## 5. push와 확인
 - push 후 로컬 `git rev-parse HEAD`, 원격 `git rev-parse origin/<브랜치>`, PR `gh pr view --json headRefOid`가 **모두 같은지** 확인한 뒤 보고한다.
