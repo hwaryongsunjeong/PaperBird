@@ -1,1 +1,1 @@
-Next.js 프론트엔드 — 사용자 화면 (칸반, 보고서 템플릿, RAG 챗봇 패널, 온보딩)
+PaperBird 프론트엔드 — Next.js (App Router), vanilla-extract, TanStack Query. 실행: `pnpm --filter @paperbird/web dev`

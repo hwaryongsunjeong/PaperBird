@@ -1,0 +1,36 @@
+{
+  "name": "@paperbird/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "deps:build": "pnpm --filter @paperbird/schemas build",
+    "dev": "pnpm deps:build && next dev",
+    "build": "pnpm deps:build && next build",
+    "start": "next start",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "lint": "eslint --max-warnings=0",
+    "typecheck": "pnpm deps:build && next typegen && tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@paperbird/schemas": "workspace:*",
+    "@tanstack/react-query": "^5.108.4",
+    "@vanilla-extract/css": "^1.21.3",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.7",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vanilla-extract/next-plugin": "^2.5.2",
+    "@vanilla-extract/vite-plugin": "^5.2.6",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "prettier": "^3.10.1",
+    "typescript": "~6.0.3",
+    "vitest": "^4.1.12"
+  }
+}
