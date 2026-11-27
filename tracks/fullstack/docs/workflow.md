@@ -278,6 +278,8 @@ gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
 | 보는 것 | 코드 자체 — 버그, 보안, 설계, SPEC·BOUNDARIES 위반, 테스트 품질 | 이슈의 수용 기준 충족 여부, 검사 재실행, 상호작용 체크리스트 |
 | 결과 | 통과해야 PR을 연다 | 지적을 PR 코멘트로 남긴다 (`Critical`·`High`는 머지 차단) |
 
+- `/verify` 생략 가능: 기능 변경이 없는 세팅·하네스 PR(새 기능·동작 변경 없이 프로젝트 설정, 도구, 문서, 하네스만 바꾸는 PR)은 `/verify`를 생략할 수 있다. 생략하면 PR 본문 테스트 항목에 "`/verify` 생략 — 기능 변경 없음"을 적는다. GPT 리뷰(§11) 대상 경로가 있으면 GPT 리뷰는 생략하지 않는다.
+
 ### 실행
 Orca 세션에서만 동작한다 (`ORCA_CLI_COMMAND`가 있거나 `orca` 명령이 있음). 명령 형식은 Orca 가이드(`orca skills get orchestration`)를 따른다.
 
