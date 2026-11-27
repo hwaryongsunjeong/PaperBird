@@ -240,7 +240,28 @@ gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
 
 ### 언제
 - `/finish`의 로컬 검사가 끝난 뒤, **PR을 만들기 전**.
-- 대상: 변경 파일에 `apps/web/**` 또는 `apps/api/**`가 있을 때만. 그 밖의 변경(`apps/ai`, `packages/**`, 문서, 하네스)만 있으면 건너뛴다.
+- 대상: 변경 파일에 `apps/web/**`, `apps/api/**`, `apps/ai/**`, `packages/**` 중 하나라도 있을 때. 문서·하네스 변경만 있으면 건너뛴다.
+
+### 최초 1회 — GPT(Codex) 연결 (팀원 각자)
+
+1. **Orca 앱 설치·실행** — Claude Code를 Orca 안에서 띄워야 리뷰 워커를 부를 수 있다.
+2. **Codex CLI 설치**
+   ```bash
+   npm install -g @openai/codex
+   codex --version
+   ```
+3. **Codex 로그인** — ChatGPT 계정(Plus 이상) 또는 OpenAI API 키
+   ```bash
+   codex login                       # 브라우저 로그인
+   # 또는 Orca 관리 계정으로 등록:
+   orca account add --agent codex    # 내부에서 codex login 실행 후 Orca에 등록
+   ```
+4. **확인**
+   ```bash
+   orca status          # runtimeState: ready
+   orca account list    # Codex 항목 확인
+   ```
+5. **연결 테스트** — Orca 안의 Claude Code 세션에서 "Codex 워커로 README.md 한 줄 요약해서 보고받아줘"처럼 요청해 `worker_done`이 돌아오는지 본다.
 
 ### GPT 리뷰와 `/verify`의 차이
 
@@ -266,10 +287,11 @@ orca orchestration worker-start --worktree current --agent codex --spec "<아래
 ```text
 PaperBird 저장소의 PR 전 코드 리뷰. 읽기 전용이다.
 - 파일을 수정·생성·삭제하지 말고, 커밋·push 하지 마라.
-- 대상: git diff origin/develop...<브랜치> 중 apps/web/**, apps/api/**
+- 대상: git diff origin/develop...<브랜치> 중 apps/web/**, apps/api/**, apps/ai/**, packages/**
 - 이슈: #<번호> — 수용 기준: <이슈 본문의 수용 기준>
 - 기준 문서: docs/SPEC.md(스택 — pnpm, vanilla-extract, TanStack Query, zod 공유 packages/schemas),
-  docs/BOUNDARIES.md(라벨 범위), tracks/fullstack/docs/workflow.md §10(심각도)
+  docs/BOUNDARIES.md(라벨 범위), tracks/fullstack/docs/workflow.md §10(심각도).
+  apps/ai는 FastAPI 내부 전용 서비스 — 외부 노출 여부도 본다.
 - 볼 것: 버그·예외 처리, 보안(입력 검증, 인증·권한, 시크릿 노출, PII), SPEC에 없는 기술 도입,
   BOUNDARIES 범위 밖 수정, 테스트가 실제 동작을 검증하는지
 - 하지 말 것: 추측성 스타일 지적, diff 밖 코드에 대한 지적

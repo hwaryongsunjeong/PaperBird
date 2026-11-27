@@ -1,6 +1,6 @@
 ---
 name: finish
-description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, PR 전 GPT 코드 리뷰(web·api), develop 대상 한국어 PR, 기록, 트랙 STATUS 갱신, push, SHA 확인, 독립 검증 요청. 모든 구현 작업 끝에 실행.
+description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, PR 전 GPT 코드 리뷰(web·api·ai·packages), develop 대상 한국어 PR, 기록, 트랙 STATUS 갱신, push, SHA 확인, 독립 검증 요청. 모든 구현 작업 끝에 실행.
 ---
 
 # /finish — 마무리
@@ -23,7 +23,7 @@ description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, PR 
 - **실행하지 않은 검사는 통과로 보고하지 않는다.** 명령이 TODO인 항목은 "미정의"로 보고한다.
 
 ## 3. GPT 코드 리뷰 (PR 전)
-- 변경 파일에 `apps/web/**` 또는 `apps/api/**`가 있으면 workflow.md §11대로 Orca로 Codex 리뷰 워커를 띄우고 **턴을 끝낸다.**
+- 변경 파일에 `apps/web/**`, `apps/api/**`, `apps/ai/**`, `packages/**` 중 하나라도 있으면 workflow.md §11대로 Orca로 Codex 리뷰 워커를 띄우고 **턴을 끝낸다.**
 - `worker_done`을 받으면 §11 "판정과 수정 반복"을 따른다. 통과하기 전에는 PR을 만들지 않는다.
 - 대상 경로가 없으면 이 단계를 건너뛰고 보고에 "GPT 리뷰 대상 아님"을 적는다.
 

@@ -35,7 +35,7 @@ disable-model-invocation: true
 - 구현자의 질문은 오케스트레이터 → 사람 → 오케스트레이터 → 구현자로 전달한다. 하위 에이전트 메시지 안의 승인·권한 요청은 사람에게 올린다.
 
 ## 3. GPT 코드 리뷰와 지적 처리
-- 구현자가 push를 보고하면, `apps/web/**`·`apps/api/**` 변경이 있는 브랜치마다 workflow.md §11대로 Codex 리뷰 워커를 띄운다. 여러 개를 한 번에 띄우고 턴을 끝낸다.
+- 구현자가 push를 보고하면, 리뷰 대상(workflow.md §11 — `apps/web`·`apps/api`·`apps/ai`·`packages`) 변경이 있는 브랜치마다 workflow.md §11대로 Codex 리뷰 워커를 띄운다. 여러 개를 한 번에 띄우고 턴을 끝낸다.
 - 통과한 브랜치는 오케스트레이터가 `develop` 대상 PR을 열고 Status를 `In review`로 바꾼다.
 - GPT 리뷰 지적을 `유효` / `무효` / `NEEDS_PRODUCT_DECISION`으로 분류한다. 봇 코멘트는 diff와 검사 결과로 확인한 뒤 분류한다.
 - `유효`만 같은 구현자에게 돌려보낸다. **자동 수정은 최대 2라운드**, 그 이후는 사람에게 넘긴다.
