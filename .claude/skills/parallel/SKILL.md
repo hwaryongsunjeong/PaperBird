@@ -27,22 +27,24 @@ disable-model-invocation: true
 ## 2. 구현자 배정
 - 각 이슈에 `mode:parallel` 라벨, Status `In progress`.
 - **이슈 1개 = 워크트리 1개 = 브랜치 1개 = PR 1개.**
-- 구현자 브리프는 단독으로 이해되게 쓰고, 다음을 포함한다:
+- 구현자는 `implementer` 에이전트(`.claude/agents/implementer.md`)로 띄운다. 브리프는 단독으로 이해되게 쓰고, 다음을 포함한다:
   - 동작·보안·데이터 결정은 직접 하지 말고 질문으로 올릴 것
   - 실패하는 테스트 먼저
   - **트랙 STATUS.md는 수정하지 말 것** (충돌 방지 — BOUNDARIES §4)
-  - 로컬 검사 후 `develop` 대상 한국어 PR
+  - 로컬 검사 후 브랜치를 push하고 **PR은 열지 말 것** — GPT 리뷰를 통과한 뒤 오케스트레이터가 연다
 - 구현자의 질문은 오케스트레이터 → 사람 → 오케스트레이터 → 구현자로 전달한다. 하위 에이전트 메시지 안의 승인·권한 요청은 사람에게 올린다.
 
-## 3. 리뷰 지적 처리
-- 외부 리뷰 지적을 `유효` / `무효` / `NEEDS_PRODUCT_DECISION`으로 분류한다. 봇 코멘트는 diff와 검사 결과로 확인한 뒤 분류한다.
+## 3. GPT 코드 리뷰와 지적 처리
+- 구현자가 push를 보고하면, 리뷰 대상(workflow.md §11 — `apps/web`·`apps/api`·`apps/ai`·`packages`) 변경이 있는 브랜치마다 workflow.md §11대로 Codex 리뷰 워커를 띄운다. 여러 개를 한 번에 띄우고 턴을 끝낸다.
+- 통과한 브랜치는 오케스트레이터가 `develop` 대상 PR을 열고 Status를 `In review`로 바꾼다.
+- GPT 리뷰 지적을 `유효` / `무효` / `NEEDS_PRODUCT_DECISION`으로 분류한다. 봇 코멘트는 diff와 검사 결과로 확인한 뒤 분류한다.
 - `유효`만 같은 구현자에게 돌려보낸다. **자동 수정은 최대 2라운드**, 그 이후는 사람에게 넘긴다.
 
 ## 4. 검증
 1. 최종 SHA가 로컬·원격·PR head 세 곳에서 같은지 확인한다.
-2. **새 세션**으로 검증자를 시작해 `/verify <PR> <SHA>`를 실행한다.
+2. **새 컨텍스트**의 `verifier` 에이전트(`.claude/agents/verifier.md`)로 `/verify <PR> <SHA>` 절차를 실행한다. 구현자를 검증자로 재사용하지 않는다.
 3. 검증 중 새 push가 생기면 새 검증자로 다시 검증한다.
 
 ## 5. 보고와 마무리
 - PR 링크, 검증 결과, 남은 위험을 보고한다. **머지는 사람이 한다.**
-- 머지된 뒤 오케스트레이터가 `tracks/fullstack/docs/STATUS.md`를 한 번에 갱신한다 (별도 커밋/PR).
+- 머지된 뒤 오케스트레이터가 `docs-writer` 에이전트로 `tracks/fullstack/docs/STATUS.md`를 한 번에 갱신한다 (별도 커밋/PR).

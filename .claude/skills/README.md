@@ -20,12 +20,13 @@
 |---|---|---|---|---|---|
 | `/seq` | 모드 A 순차 | 초안 | 금지 | 이슈 번호 (`fullstack` 또는 `harness` 메인 라벨) | 브랜치, PR (`/finish`) |
 | `/compare` | 모드 B 비교 | 초안 | 금지 | 이슈 번호 | draft PR 2개, 이슈 코멘트 |
+| `/codex` | 모드 D 역할 반전 | 초안 | 금지 | 이슈 번호 | Codex 워커 브랜치, Claude 리뷰 후 PR |
 | `/parallel` | 모드 C 병렬 | 초안 | 금지 | 이슈 번호 여러 개 | 이슈당 PR, 머지 후 트랙 STATUS |
 | `/pick` | 비교 후 전환 | 초안 | 금지 | `1` \| `2` | 이슈 코멘트 |
 | `/refine` | 비교 후 전환 | 초안 | 금지 | 피드백 문장 | 선택 브랜치 |
 | `/retry` | 비교 후 전환 | 초안 | 금지 | 반려 사유 | 새 라운드 |
 | `/back-to-design` | 비교 후 전환 | 초안 | 금지 | — | `needs-design` 이슈 |
-| `/finish` | 마무리 | 초안 | 허용 | — | PR, 트랙 STATUS, ADR |
+| `/finish` | 마무리 | 초안 | 허용 | — | GPT 리뷰(web·api·ai·packages, Orca+Codex) → PR, 트랙 STATUS, ADR |
 | `/verify` | 검증 | 초안 | 허용 | PR 번호, SHA | PR 코멘트 (코드 수정 없음) |
 | `/lesson` | 기록 | 초안 | 허용 | 사건 설명 | `tracks/fullstack/docs/lessons/` |
 | `/log` | 기록 | 초안 | 허용 | 주제 | `docs/journal/` |
