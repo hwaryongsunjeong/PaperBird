@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "deps:build": "pnpm --filter @paperbird/schemas build",
+    "dev": "pnpm deps:build && next dev",
+    "build": "pnpm deps:build && next build",
     "start": "next start",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint --max-warnings=0",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "pnpm deps:build && next typegen && tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
@@ -29,7 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "prettier": "^3.10.1",
-    "typescript": "^6.0.3",
+    "typescript": "~6.0.3",
     "vitest": "^4.1.12"
   }
 }

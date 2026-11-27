@@ -7,7 +7,7 @@ export const badge = style({
   gap: vars.space.xs,
   padding: `${vars.space.xs} ${vars.space.md}`,
   borderRadius: vars.radius.pill,
-  fontSize: '14px',
+  fontSize: vars.fontSize.sm,
 });
 
 export const tone = styleVariants({

@@ -20,6 +20,10 @@ export const vars = createGlobalTheme(':root', {
   radius: {
     pill: '999px',
   },
+  fontSize: {
+    sm: '14px',
+    md: '16px',
+  },
   font: {
     body: 'system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif',
   },
