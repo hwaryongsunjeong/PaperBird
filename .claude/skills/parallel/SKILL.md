@@ -27,7 +27,7 @@ disable-model-invocation: true
 ## 2. 구현자 배정
 - 각 이슈에 `mode:parallel` 라벨, Status `In progress`.
 - **이슈 1개 = 워크트리 1개 = 브랜치 1개 = PR 1개.**
-- 구현자 브리프는 단독으로 이해되게 쓰고, 다음을 포함한다:
+- 구현자는 `implementer` 에이전트(`.claude/agents/implementer.md`)로 띄운다. 브리프는 단독으로 이해되게 쓰고, 다음을 포함한다:
   - 동작·보안·데이터 결정은 직접 하지 말고 질문으로 올릴 것
   - 실패하는 테스트 먼저
   - **트랙 STATUS.md는 수정하지 말 것** (충돌 방지 — BOUNDARIES §4)
@@ -40,9 +40,9 @@ disable-model-invocation: true
 
 ## 4. 검증
 1. 최종 SHA가 로컬·원격·PR head 세 곳에서 같은지 확인한다.
-2. **새 세션**으로 검증자를 시작해 `/verify <PR> <SHA>`를 실행한다.
+2. **새 컨텍스트**의 `verifier` 에이전트(`.claude/agents/verifier.md`)로 `/verify <PR> <SHA>` 절차를 실행한다. 구현자를 검증자로 재사용하지 않는다.
 3. 검증 중 새 push가 생기면 새 검증자로 다시 검증한다.
 
 ## 5. 보고와 마무리
 - PR 링크, 검증 결과, 남은 위험을 보고한다. **머지는 사람이 한다.**
-- 머지된 뒤 오케스트레이터가 `tracks/fullstack/docs/STATUS.md`를 한 번에 갱신한다 (별도 커밋/PR).
+- 머지된 뒤 오케스트레이터가 `docs-writer` 에이전트로 `tracks/fullstack/docs/STATUS.md`를 한 번에 갱신한다 (별도 커밋/PR).

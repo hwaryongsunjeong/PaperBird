@@ -27,7 +27,7 @@ disable-model-invocation: true
 
 ## 3. 병렬 구현
 - 브랜치: `<type>/fullstack/<설명>-r<N>-v1`, `-r<N>-v2` — 각각 별도 워크트리 (workflow.md §5)
-- 구현자 2명을 각 워크트리에서 실행한다. 각자 `develop` 대상 **draft PR**을 연다.
+- `implementer` 에이전트 2개를 각 워크트리에서 실행한다. 각자 `develop` 대상 **draft PR**을 연다.
 - 2라운드는 1라운드 브랜치를 재사용하지 않는다. 이전 브랜치는 참고용으로 남긴다.
 
 ## 4. 비교 코멘트
