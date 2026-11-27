@@ -12,7 +12,9 @@ description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, dev
 
 ## 1. 범위 확인
 - `git diff --name-only origin/develop...HEAD`로 변경 파일을 확인한다.
-- BOUNDARIES `fullstack` 범위 밖 파일, `harness` 경로, 루트 `docs/STATUS.md`가 있으면 **중단**한다.
+- 허용 범위(메인 라벨 경로 + 서브 라벨 트랙 경로) 밖 파일, `harness` 경로, 루트 `docs/STATUS.md`가 있으면 **중단**한다.
+- `mode:unleashed` 이슈이면 중단하지 않고, 범위 밖 파일 목록을 PR 본문에 적는다 (정리는 `/leash`).
+- 서브 라벨 트랙 경로를 수정했다면 커밋을 그 트랙 scope로 나누고, PR 본문에 서브 트랙 리뷰가 필요함을 적는다.
 
 ## 2. 로컬 검사
 - workflow.md §6의 format / lint / type / test / build를 변경된 앱에 대해 실행한다.

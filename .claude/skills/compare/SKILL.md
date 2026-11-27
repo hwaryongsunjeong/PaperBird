@@ -15,7 +15,7 @@ disable-model-invocation: true
 - `tracks/fullstack/docs/STATUS.md`, `tracks/fullstack/docs/lessons/INDEX.md`
 
 ## 1. 준비
-1. 이슈, 관련 설계 문서, 이전 라운드 기록(이슈 코멘트)을 읽는다.
+1. 이슈, 관련 설계 문서, 이전 라운드 기록(이슈 코멘트)을 읽는다. `candidate` 라벨이 있으면 승인 전이므로 멈춘다.
 2. 라운드 번호를 정한다. **3라운드가 되면 중단하고 `/back-to-design`을 제안한다.**
 3. `mode:compare` 라벨을 붙이고 이슈에 "라운드 N 시작" 코멘트를 남긴다.
 

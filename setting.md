@@ -16,16 +16,17 @@ PaperBird/
 │   ├── conventions/
 │   │   ├── BRANCH_STRATEGY.md
 │   │   ├── COMMIT_CONVENTION.md
-│   │   └── PR_STRATEGY.md
+│   │   ├── PR_STRATEGY.md
+│   │   └── TICKET.md                # 티켓 양식·주간 흐름 (금 16:00 후보 마감 → 팀장 승인)
 │   ├── journal/                     # 결정 일지 — 항목마다 새 파일 (YYYY-MM-DD-<트랙>-<slug>.md)
 │   └── lessons/                     # 공통으로 승격된 교훈만
 │
 ├── .claude/
 │   ├── settings.json                # 훅·권한 설정
 │   ├── agents/                      # 역할 정의
-│   └── skills/                      # 슬래시 명령 12개 (fullstack 워크플로우용)
-│                                     #   seq · compare · parallel · pick · refine · retry · back-to-design
-│                                     #   finish · verify · lesson · log · progress
+│   └── skills/                      # 슬래시 명령 — 목록·상태는 skills/README.md (스킬 스택)
+│                                     #   fullstack 12개 · 공통 unleash/leash · ticket/triage (초안)
+│                                     #   security attack-log · access-audit (요청됨)
 │
 ├── .github/
 │   ├── PULL_REQUEST_TEMPLATE.md

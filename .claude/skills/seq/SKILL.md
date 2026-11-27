@@ -17,7 +17,7 @@ disable-model-invocation: true
 ## 1. 이슈 확인
 1. `gh issue view $ARGUMENTS --json number,title,body,labels,state,projectItems`
 2. 본문에 `범위` / `범위 밖` / `수용 기준`이 없으면 **중단**하고 보완을 요청한다.
-3. `fullstack` 라벨이 없으면 중단하고 사람에게 확인한다.
+3. 라벨 확인 (BOUNDARIES §1): 메인 라벨이 `fullstack` 1개인지, 서브 라벨(`sub:*`)이 있는지 본다. 메인 라벨이 없거나 2개 이상이면 중단하고 사람에게 확인한다. `mode:unleashed`이면 `/seq`가 아니라 해제 모드로 진행 중이므로 멈추고 알린다. `candidate` 라벨이 있으면 아직 승인 전이므로 멈춘다.
 
 ## 2. 모드 기록
 - `gh issue edit $ARGUMENTS --add-label "mode:seq"` (다른 `mode:*` 라벨은 제거)
@@ -28,7 +28,7 @@ disable-model-invocation: true
 
 ## 4. 계획 제시 (한국어)
 - 구현 계획과 **변경 파일 목록**을 제시한다.
-- 변경 파일이 BOUNDARIES의 `fullstack` 범위 밖이면 중단한다.
+- 변경 파일이 BOUNDARIES의 허용 범위(메인 `fullstack` 경로 + 서브 라벨 트랙 경로) 밖이면 중단한다. 다른 트랙이 엮여 있는데 서브 라벨이 없으면 서브 라벨 추가를 사람에게 제안한다.
 - 변경 파일에 `harness` 경로가 있으면 중단하고 `harness` 이슈 분리를 제안한다 (BOUNDARIES §3).
 - 동작·보안·데이터에 영향을 주는 변경이면 **사람의 승인 전에는 구현하지 않는다.**
 - 되돌리기 어려운 변경(DB 스키마, 공개 API 계약, 배포 설정)이면 팀장 확인 + ADR이 필요함을 알린다.
