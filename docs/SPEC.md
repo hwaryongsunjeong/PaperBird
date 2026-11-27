@@ -16,6 +16,11 @@
 | 스타일 | `apps/web` | vanilla-extract | `[확정]` |
 | 스키마 검증 (web·api 공유) | `packages/schemas` (`@paperbird/schemas`) | zod — tsup 빌드, web·api가 워크스페이스 의존성으로 사용 | `[확정]` |
 | 서버 상태 (web) | `apps/web` | TanStack Query | `[확정]` |
+| 테스트 (TS 전체) | `apps/web`, `apps/api`, `packages/*` | Vitest | `[확정]` |
+| 포맷 (TS 전체) | `apps/web`, `apps/api`, `packages/*` | Prettier (`singleQuote`, `trailingComma: all`) | `[확정]` |
+| 린트 | `apps/api`, `packages/*` | oxlint (`--deny-warnings` — 경고도 실패) | `[확정]` |
+| 린트 (web) | `apps/web` | ESLint (`eslint-config-next`) | `[확정]` |
+| TypeScript | TS 전체 | ~6.0.3 (tsup 9 호환 확인 버전) | `[확정]` |
 | 클라이언트 전역 상태 (web) | `apps/web` | 별도 라이브러리 없음 (React 기본 상태). Jotai 등은 도입하지 않음 — 필요하면 ADR | `[확정]` |
 | Python 도구 (ai) | `apps/ai` | TODO: uv / poetry | `[설계 필요]` |
 | 인프라 | `infra/` | TODO: 사용 도구 (k8s / helm / terraform 등) | `[설계 필요]` |
