@@ -1,6 +1,6 @@
 ---
 name: finish
-description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, develop 대상 한국어 PR, 기록, 트랙 STATUS 갱신, push, SHA 확인, 독립 검증 요청. 모든 구현 작업 끝에 실행.
+description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, PR 전 GPT 코드 리뷰(web·api), develop 대상 한국어 PR, 기록, 트랙 STATUS 갱신, push, SHA 확인, 독립 검증 요청. 모든 구현 작업 끝에 실행.
 ---
 
 # /finish — 마무리
@@ -22,18 +22,23 @@ description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, dev
 - 새 검사 스크립트를 만들었다면, 일부러 결함을 넣은 사본에서 **실패하는지 먼저** 확인한다.
 - **실행하지 않은 검사는 통과로 보고하지 않는다.** 명령이 TODO인 항목은 "미정의"로 보고한다.
 
-## 3. 기록
+## 3. GPT 코드 리뷰 (PR 전)
+- 변경 파일에 `apps/web/**` 또는 `apps/api/**`가 있으면 workflow.md §11대로 Orca로 Codex 리뷰 워커를 띄우고 **턴을 끝낸다.**
+- `worker_done`을 받으면 §11 "판정과 수정 반복"을 따른다. 통과하기 전에는 PR을 만들지 않는다.
+- 대상 경로가 없으면 이 단계를 건너뛰고 보고에 "GPT 리뷰 대상 아님"을 적는다.
+
+## 4. 기록
 - 결정이 있었으면 `/log`, 실수·유효 지적이 있었으면 `/lesson`.
 - 되돌리기 어려운 결정은 `tracks/fullstack/docs/adr/ADR-<이슈번호>-<slug>.md`.
 - `mode:seq`이면 `tracks/fullstack/docs/STATUS.md`를 갱신한다. `mode:parallel` 구현자는 갱신하지 않는다.
 
-## 4. 커밋·PR
+## 5. 커밋·PR
 - 커밋: `<type>(<메인 라벨>): <요약>` — 한 커밋에 한 가지 변경 ([COMMIT_CONVENTION](../../../docs/conventions/COMMIT_CONVENTION.md))
-- `gh pr create --base develop` — 제목은 커밋 형식, 본문은 PR 템플릿 항목(변경 요약, 영향받는 트랙, 범위 확인, 테스트, 팀장 승인 필요 여부) + `관련 이슈: #<번호>`
+- `gh pr create --base develop` — 제목은 커밋 형식, 본문은 PR 템플릿 항목(변경 요약, 영향받는 트랙, 범위 확인, 테스트, 팀장 승인 필요 여부) + `관련 이슈: #<번호>`. 테스트 항목에 GPT 리뷰 결과를 적는다.
 - Projects Status를 `In review`로 변경 (workflow.md §2)
 
-## 5. push와 확인
+## 6. push와 확인
 - push 후 로컬 `git rev-parse HEAD`, 원격 `git rev-parse origin/<브랜치>`, PR `gh pr view --json headRefOid`가 **모두 같은지** 확인한 뒤 보고한다.
 
-## 6. 검증 요청
+## 7. 검증 요청
 - 보고 끝에 "새 세션에서 `/verify <PR> <SHA>` 실행"을 요청한다. **머지하지 않는다.**

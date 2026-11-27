@@ -23,5 +23,5 @@ description: "[fullstack] 구현자 — 이슈 하나를 맡아 자기 워크트
 ## 끝낼 때
 1. workflow.md §6 검사를 실행한다.
 2. 커밋은 `<type>(<scope>): <요약>` — 서브 라벨 트랙 파일은 그 트랙 scope로 나눈다.
-3. `develop` 대상 한국어 PR을 연다 (`.github/PULL_REQUEST_TEMPLATE.md` 항목).
+3. 브리프가 PR 생성을 지시한 경우에만 `develop` 대상 한국어 PR을 연다 (`.github/PULL_REQUEST_TEMPLATE.md` 항목). `/parallel`에서는 push까지만 하고, PR은 GPT 리뷰 통과 후 오케스트레이터가 연다.
 4. 오케스트레이터에게 PR 링크, 최종 SHA, 실행한 검사와 결과, 남은 질문을 보고한다.
