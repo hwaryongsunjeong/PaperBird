@@ -1,0 +1,6 @@
+# PaperBird pnpm 워크스페이스
+# apps/* 중 package.json이 있는 폴더(web, api)와 packages/*(schemas 등)를 묶는다.
+# apps/ai(FastAPI)처럼 package.json이 없는 폴더는 자동으로 제외된다.
+packages:
+  - "apps/*"
+  - "packages/*"
