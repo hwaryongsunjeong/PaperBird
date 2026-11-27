@@ -1,1 +1,1 @@
-NestJS 백엔드 — 비즈니스 로직 (인증/권한, 워크스페이스, 보고서 워크플로우)
+PaperBird 백엔드 — NestJS 12 (ESM). 실행: `pnpm --filter @paperbird/api dev` → `GET http://localhost:3000/health`
