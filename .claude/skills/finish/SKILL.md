@@ -26,6 +26,7 @@ description: [fullstack] 구현 작업을 마무리한다 — 로컬 검사, PR 
 - 변경 파일에 `apps/web/**`, `apps/api/**`, `apps/ai/**`, `packages/**` 중 하나라도 있으면 workflow.md §11대로 Orca로 Codex 리뷰 워커를 띄우고 **턴을 끝낸다.**
 - `worker_done`을 받으면 §11 "판정과 수정 반복"을 따른다. 통과하기 전에는 PR을 만들지 않는다.
 - 대상 경로가 없으면 이 단계를 건너뛰고 보고에 "GPT 리뷰 대상 아님"을 적는다.
+- `mode:codex`(Codex가 구현) 이슈는 이 단계 대신 workflow.md §12의 Claude 리뷰를 쓴다 (`/codex`가 처리).
 
 ## 4. 기록
 - 결정이 있었으면 `/log`, 실수·유효 지적이 있었으면 `/lesson`.

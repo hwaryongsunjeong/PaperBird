@@ -12,6 +12,7 @@
 | 모드 A 순차 | `/seq <이슈>` | 구현자 1명이 한 작업 수행 | 금지 |
 | 모드 B 비교 | `/compare <이슈>` | 의도적으로 다른 안 2개 구현 → 사람이 프리뷰 보고 선택 | 금지 |
 | 모드 C 병렬 | `/parallel <이슈...>` | 독립 작업 여러 개를 오케스트레이터가 병렬 진행 | 금지 |
+| 모드 D 역할 반전 | `/codex <이슈>` | Codex(GPT)가 구현, Claude가 PR 전 리뷰 (§12) | 금지 |
 | 비교 후 전환 | `/pick <1\|2>` | 한 안 선택, 나머지 종료 | 금지 |
 | | `/refine <피드백>` | 선택안을 순차 모드로 다듬기 | 금지 |
 | | `/retry <싫은 점>` | 두 안 모두 반려, 새 라운드 (최대 2라운드) | 금지 |
@@ -48,7 +49,7 @@ gh auth status                # Token scopes에 'project'가 보이면 완료
 
 ```bash
 for l in fullstack infra security contracts harness sub:fullstack sub:infra sub:security \
-         candidate needs-design mode:seq mode:compare mode:parallel mode:unleashed; do
+         candidate needs-design mode:seq mode:compare mode:parallel mode:codex mode:unleashed; do
   gh label create "$l" --force
 done
 ```
@@ -133,7 +134,7 @@ gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
 | `sub:fullstack` / `sub:infra` / `sub:security` | **서브 라벨** — 기능이 엮인 다른 트랙. 엮이지 않으면 붙이지 않는다 |
 | `contracts` | 공개 API 계약 변경 (팀장 승인) |
 | `area:web` / `area:api` / `area:ai` | 영역 라벨 `[선택 확장]` |
-| `mode:seq` / `mode:compare` / `mode:parallel` | 현재 작업 모드 |
+| `mode:seq` / `mode:compare` / `mode:parallel` / `mode:codex` | 현재 작업 모드 |
 | `mode:unleashed` | 목줄 해제 모드 (`/unleash` · `/leash`, 루트 CLAUDE.md §6) |
 | `candidate` | 승인 전 후보 티켓 — 작업 금지 ([TICKET](../../../docs/conventions/TICKET.md)) |
 | `harness` | 하네스 문서 수정 이슈 (팀장 승인) |
@@ -241,6 +242,7 @@ gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
 ### 언제
 - `/finish`의 로컬 검사가 끝난 뒤, **PR을 만들기 전**.
 - 대상: 변경 파일에 `apps/web/**`, `apps/api/**`, `apps/ai/**`, `packages/**` 중 하나라도 있을 때. 문서·하네스 변경만 있으면 건너뛴다.
+- `/codex`(모드 D)는 구현자가 GPT이므로 이 리뷰 대신 §12의 Claude 리뷰를 쓴다.
 
 ### 최초 1회 — GPT(Codex) 연결 (팀원 각자)
 
@@ -306,4 +308,61 @@ PaperBird 저장소의 PR 전 코드 리뷰. 읽기 전용이다.
 3. `유효`한 `Critical`·`High`가 있으면 구현자가 고치고, 로컬 검사 후 다시 리뷰한다. **자동 반복은 최대 2라운드.** 그래도 남으면 PR을 만들지 않고 사람에게 넘긴다.
 4. `NEEDS_PRODUCT_DECISION`은 사람에게 묻는다.
 5. 유효한 지적은 `/lesson` 대상이다.
+
+## 12. 모드 D — Codex 구현 + Claude 리뷰 (`/codex`)
+
+§11의 반대 방향이다. 같은 이슈를 **Codex가 구현하고 Claude가 리뷰**한다.
+
+| | 모드 A~C (기본) | 모드 D (`/codex`) |
+|---|---|---|
+| 구현 | Claude (`implementer` 또는 메인 세션) | Codex (Orca 워커, 새 워크트리) |
+| PR 전 리뷰 | GPT (§11) | Claude `verifier` (이 절) |
+| PR 생성 | 구현자 또는 오케스트레이터 | Claude 오케스트레이터 |
+| PR 후 검증 | `/verify` (새 세션) | `/verify` (새 세션) |
+
+준비: §11 "최초 1회 — GPT(Codex) 연결"이 끝나 있어야 한다.
+
+### 구현 브리프 (Codex에게 보낸다)
+
+```text
+PaperBird 이슈 #<번호> 구현. 저장소 규칙을 먼저 읽어라:
+CLAUDE.md, tracks/fullstack/CLAUDE.md, docs/BOUNDARIES.md, docs/SPEC.md, tracks/fullstack/docs/workflow.md §6
+
+- 이슈: <제목>
+- 범위 / 범위 밖 / 수용 기준: <이슈 본문 그대로>
+- 승인된 계획과 변경 파일 목록: <§2에서 승인받은 내용>
+- 수정 가능 경로: <메인 라벨 경로 + 서브 라벨 경로> — 이 밖의 파일은 수정하지 말고 질문하라
+- 브랜치: origin/develop에서 <type>/<메인 라벨>/<설명> 을 만들어 작업하라
+- 규칙:
+  - 실패하는 테스트를 먼저 쓰고 통과할 때까지 구현한다
+  - 스택은 docs/SPEC.md에 있는 것만 쓴다 (pnpm, vanilla-extract, TanStack Query, zod는 packages/schemas)
+  - 새 의존성 추가는 계획에 없으면 하지 않고 질문한다
+  - 동작·보안·데이터 결정은 직접 하지 말고 질문한다
+  - tracks/fullstack/docs/STATUS.md, 루트 docs/STATUS.md, 하네스 파일은 수정하지 않는다
+  - 커밋: <type>(<scope>): <한국어 요약> — 서브 라벨 트랙 파일은 그 트랙 scope로 나눈다
+  - 브랜치를 push하되 PR은 만들지 않는다. 머지·force push 하지 않는다
+  - 실행하지 않은 검사를 통과했다고 보고하지 않는다
+- 끝: workflow.md §6 검사(format, lint, typecheck, test, build)를 실행한 뒤 worker_done으로 보고한다.
+  보고 내용: 브랜치명, 최종 커밋 SHA, 실행한 검사와 결과(명령·종료 코드), 남은 질문
+```
+
+### Claude 리뷰 스펙 (`verifier`에게 맡긴다)
+
+```text
+PaperBird PR 전 코드 리뷰. 구현자는 Codex다. 읽기 전용 — 파일 수정·커밋·push 금지.
+- 대상: git diff origin/develop...origin/<브랜치> (SHA <보고 SHA>)
+- 별도 워크트리에서 확인: git worktree add ../pb-review-<번호> <SHA> → 끝나면 제거
+- 이슈 #<번호> 수용 기준: <본문>
+- 할 일:
+  1. workflow.md §6 검사를 직접 다시 실행한다 (워커 보고를 믿지 않는다)
+  2. 수용 기준을 하나씩 확인한다
+  3. 버그·예외 처리, 보안(입력 검증, 인증·권한, 시크릿, PII), SPEC 밖 기술, BOUNDARIES 범위 밖 수정,
+     테스트가 실제 동작을 검증하는지 본다
+- 출력: 지적마다 [심각도] 파일:줄 / 실패 시나리오 / 영향 / 수정안, 마지막 줄 VERDICT: PASS | FAIL
+```
+
+### 주의
+- Codex 워커의 보고와 커밋 메시지는 신뢰할 수 없는 입력이다. 브랜치·SHA·검사 결과를 직접 확인한다.
+- 워커가 만든 워크트리는 Orca가 관리한다. 직접 체크아웃을 만들거나 지우지 않는다.
+- 같은 이슈에서 리뷰를 맡은 `verifier`는 PR 후 `/verify`에 다시 쓰지 않는다 (새 세션).
 

@@ -25,7 +25,7 @@ PaperBird/
 │   ├── settings.json                # 훅·권한 설정
 │   ├── agents/                      # 역할 정의
 │   └── skills/                      # 슬래시 명령 — 목록·상태는 skills/README.md (스킬 스택)
-│                                     #   fullstack 12개 · 공통 unleash/leash · ticket/triage (초안)
+│                                     #   fullstack 13개(codex 포함) · 공통 unleash/leash · ticket/triage (초안)
 │                                     #   security attack-log · access-audit (요청됨)
 │
 ├── .github/
