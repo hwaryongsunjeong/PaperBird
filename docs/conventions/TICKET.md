@@ -17,7 +17,9 @@
 | 금요일 16:00 이후 | 팀장 | 후보를 승인·병합·보류·반려한다 (`/triage`) |
 | 월요일 | 팀원 각자 | 승인된 자기 티켓을 확인하고 작업을 시작한다 |
 
-- **`candidate` 라벨이 붙은 티켓은 작업하지 않는다.** 승인되면 `candidate`가 떨어지고 Projects Status가 `Todo`가 된다.
+- **`candidate` 라벨이 붙은 티켓은 작업하지 않는다.** 승인되면 `candidate`가 떨어지고 Projects Status가 `Ready`가 된다.
+- 보드 Status 흐름: `Backlog`(후보) → `Ready`(승인) → `In progress` → `In review` → `Done`. 승인됐지만 막혔으면 `Blocked`.
+- 보드 `Iteration`(1주, 월요일 시작)은 승인 시 다음 주로 지정된다.
 - 주중 예외는 없다. 작업 중 새로 생긴 일(스킬이 만드는 후속 이슈 포함)도 모두 `candidate`로 만들고 다음 금요일에 승인받는다.
 - 승인된 티켓을 고칠 점이 있으면 이슈 댓글로 남기고, 수정은 팀장이 한다.
 

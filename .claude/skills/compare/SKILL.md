@@ -9,6 +9,8 @@ disable-model-invocation: true
 
 대상 이슈: `$ARGUMENTS`
 
+> 인자의 `#`은 떼고 숫자만 쓴다 (예: `#10` → `10`). 셸에서 `#`은 주석이다 — workflow.md §2.
+
 ## 0. 먼저 읽기
 - 루트 `CLAUDE.md`, `tracks/fullstack/CLAUDE.md`, `docs/BOUNDARIES.md`, `docs/SPEC.md`
 - `tracks/fullstack/docs/workflow.md` — GitHub Projects 명령, 라벨, 검사, 기록 위치
@@ -17,7 +19,7 @@ disable-model-invocation: true
 ## 1. 준비
 1. 이슈, 관련 설계 문서, 이전 라운드 기록(이슈 코멘트)을 읽는다. `candidate` 라벨이 있으면 승인 전이므로 멈춘다.
 2. 라운드 번호를 정한다. **3라운드가 되면 중단하고 `/back-to-design`을 제안한다.**
-3. `mode:compare` 라벨을 붙이고 이슈에 "라운드 N 시작" 코멘트를 남긴다.
+3. `mode:compare` 라벨을 붙이고 Status를 `In progress`로 바꾼 뒤, 이슈에 "라운드 N 시작" 코멘트를 남긴다.
 
 ## 2. 브리프 2개
 - 서로 **의도적으로 다른** 설계의 구현 브리프 2개를 쓴다. 각 브리프는 단독으로 읽어도 이해되게 쓴다.

@@ -33,6 +33,10 @@ PaperBird/
 │   ├── ISSUE_TEMPLATE/task.md       # 범위 / 범위 밖 / 수용 기준
 │   └── CODEOWNERS                   # 공통 경로 owner = 팀장
 │
+├── package.json                     # pnpm 워크스페이스 루트
+├── pnpm-workspace.yaml              # apps/*, packages/*
+├── packages/
+│   └── schemas/                     # @paperbird/schemas — web·api 공유 zod 스키마
 ├── contracts/                       # 공개 API 계약 (OpenAPI 등) — 팀장 승인
 ├── infra/                           # 실제 인프라 코드 (k8s, helm 등)
 ├── sc-test/                         # 보안 테스트 스크립트/툴 (결과 수치는 test-records/)

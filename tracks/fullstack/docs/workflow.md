@@ -25,7 +25,7 @@
 - 모드는 사람이 슬래시 명령을 입력할 때만 바뀐다. 현재 모드는 이슈 라벨(`mode:*`)과 트랙 STATUS에 남겨 세션이 바뀌어도 유지된다.
 - 원형의 `/status`는 Claude Code 내장 명령과 이름이 같아 `/progress`로 바꿨다.
 
-## 2. GitHub Projects 설정 `[설계 필요]`
+## 2. GitHub Projects 설정
 
 ### 최초 1회 — 팀원 각자 자기 PC에서
 
@@ -37,15 +37,14 @@ gh auth refresh -s project    # project 권한 추가 (브라우저 인증 1회)
 gh auth status                # Token scopes에 'project'가 보이면 완료
 ```
 
-### 최초 1회 — 저장소·프로젝트 설정 (팀장)
+### 저장소·프로젝트 설정 (팀장)
 
-- [ ] 저장소 기본 브랜치를 `develop`으로 변경 (Settings → General)
+- [x] 저장소 기본 브랜치 `develop`
 - [ ] 머지 방식: squash + merge commit만 허용 (Settings → General → Pull Requests)
-- [ ] `main`, `develop` 브랜치 보호 + "Require review from Code Owners" (`.github/CODEOWNERS`의 팀장 아이디 입력 후)
-- [ ] GitHub Project 생성 → 아래 표의 owner·number 기입
-- [ ] Status 필드 옵션을 아래 표와 같게 맞춤
-- [ ] Project 기본 워크플로우 켜기 (Item closed → Done, Pull request merged → Done 등)
-- [ ] 라벨 생성 (§3):
+- [x] `main`, `develop` 브랜치 보호 — [ ] CODEOWNERS 팀장 아이디 입력
+- [x] Project `PaperBird Kanban` 생성, Status에 `Blocked` 추가, `Iteration` 필드 추가 (2026-11-27)
+- [x] Project 기본 워크플로우 켜짐 (Item added, Item closed, Pull request merged, Auto-add 등)
+- [x] 라벨 생성 (§3) — 다시 만들 때:
 
 ```bash
 for l in fullstack infra security contracts harness sub:fullstack sub:infra sub:security \
@@ -54,39 +53,77 @@ for l in fullstack infra security contracts harness sub:fullstack sub:infra sub:
 done
 ```
 
+### 프로젝트 값
+
 | 항목 | 값 |
 |---|---|
-| Project owner | TODO (org 또는 user) |
-| Project number | TODO |
-| Status 필드 옵션 | `Todo` / `In Progress` / `In Review` / `Blocked` / `Done` — TODO: 실제 옵션명 확인 |
+| Project | `PaperBird Kanban` — <https://github.com/orgs/hwaryongsunjeong/projects/2> |
+| Owner / Number | `hwaryongsunjeong` / `2` |
+| Project ID | `PVT_kwDOFX14yc4Bs-IT` |
+| Status 필드 ID | `PVTSSF_lADOFX14yc4Bs-ITzhrJvWs` |
+| Size 필드 ID | `PVTSSF_lADOFX14yc4Bs-ITzhrJvw8` |
+| Iteration 필드 ID | `PVTIF_lADOFX14yc4Bs-ITzhrjoC4` (1주 단위, 월요일 시작) |
 
-자주 쓰는 명령 (`<OWNER>`, `<NUM>`은 위 표 값):
+### Status와 티켓 단계
+
+| Status | 옵션 ID | 언제 | 누가 바꾸나 |
+|---|---|---|---|
+| `Backlog` | `f75ad846` | `candidate` 후보 (승인 전) | 프로젝트 자동 추가 시 기본값 |
+| `Ready` | `61e4505c` | 팀장 승인 완료, 작업 가능 | `/triage` |
+| `In progress` | `47fc9ee4` | 작업 시작 | `/seq`, `/compare`, `/parallel`, `/unleash` |
+| `Blocked` | `474ebedf` | 승인됐지만 선행 이슈·결정·외부 요인 때문에 진행 불가 | `/back-to-design`, 또는 작업자가 막혔을 때 |
+| `In review` | `df73e18b` | PR 리뷰 중 | `/finish` |
+| `Done` | `98236657` | 완료 | 프로젝트 자동 (이슈 닫힘·PR 머지) |
+
+### Size
+
+| 크기 | 옵션 ID | 기준 (TICKET.md §4) |
+|---|---|---|
+| `XS` | `6c6483d2` | 쓰지 않음 |
+| `S` | `f784b110` | 반나절 이하 |
+| `M` | `7515a9f1` | 1~2일 |
+| `L` | `817d0097` | 3일 이상 |
+| `XL` | `db339eb2` | 쓰지 않음 (나눈다) |
+
+### 필드 바꾸는 명령
 
 ```bash
-# 이슈 읽기
-gh issue view <이슈> --json number,title,body,labels,state,assignees,projectItems
+OWNER=hwaryongsunjeong; NUM=2; PROJECT_ID=PVT_kwDOFX14yc4Bs-IT
 
-# 라벨 추가/제거
-gh issue edit <이슈> --add-label "mode:seq"
-gh issue edit <이슈> --remove-label "mode:compare"
+# 이슈 번호 → 프로젝트 항목 ID (이슈가 보드에 없으면 빈 값 → 먼저 추가)
+ITEM=$(gh project item-list $NUM --owner $OWNER --limit 500 --format json \
+  --jq ".items[] | select(.content.number==<이슈>) | .id")
+[ -z "$ITEM" ] && ITEM=$(gh project item-add $NUM --owner $OWNER \
+  --url https://github.com/hwaryongsunjeong/PaperBird/issues/<이슈> --format json --jq .id)
 
-# 프로젝트 항목·필드 조회
-gh project item-list <NUM> --owner <OWNER> --format json
-gh project field-list <NUM> --owner <OWNER> --format json
+# Status 변경 (옵션 ID는 위 표)
+gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
+  --field-id PVTSSF_lADOFX14yc4Bs-ITzhrJvWs --single-select-option-id <옵션 ID>
 
-# Status 변경 (ID는 위 두 명령 결과에서 얻는다)
-gh project item-edit --id <ITEM_ID> --project-id <PROJECT_ID> \
-  --field-id <STATUS_FIELD_ID> --single-select-option-id <OPTION_ID>
+# Size 변경
+gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
+  --field-id PVTSSF_lADOFX14yc4Bs-ITzhrJvw8 --single-select-option-id <옵션 ID>
 
-# PR
-gh pr create --base develop --title "<커밋 컨벤션 형식>" --body-file <파일>
-gh pr view <PR> --json number,headRefOid,headRefName,statusCheckRollup,reviewDecision
-gh pr comment <PR> --body-file <파일>
+# 다음 주 Iteration ID 찾기 (다음 월요일 시작 주차) → 지정
+NEXT_MON=$(date -v+mon +%F 2>/dev/null || date -d "next monday" +%F)
+ITER=$(gh api graphql -f query='{node(id:"PVTIF_lADOFX14yc4Bs-ITzhrjoC4"){... on ProjectV2IterationField{configuration{iterations{id startDate}}}}}' \
+  --jq ".data.node.configuration.iterations[] | select(.startDate==\"$NEXT_MON\") | .id")
+gh project item-edit --id "$ITEM" --project-id $PROJECT_ID \
+  --field-id PVTIF_lADOFX14yc4Bs-ITzhrjoC4 --iteration-id "$ITER"
 ```
 
-Status 자동화:
-- Projects 기본 워크플로우(이슈 종료·PR 머지 시 `Done` 등)를 먼저 켜고, 부족한 부분만 스킬이 `gh project item-edit`로 처리한다.
+- `ITER`가 비면 해당 주차가 아직 없다 (현재 2026-W49 ~ W52까지 생성됨). 보드 설정 → Iteration에서 주차를 추가하라고 알리고 이 단계만 건너뛴다.
+- 명령이 실패하면 실패한 단계와 오류를 보고하고, 성공한 것처럼 말하지 않는다.
+
+### 이슈 번호 인자
+
+- 스킬 인자의 이슈·PR 번호는 `#`을 떼고 숫자만 쓴다. 셸에서 `#10`은 주석으로 처리되어 `gh issue view #10`이 인자 없이 실행된다.
+- 사람이 `/seq #10`처럼 입력해도 스킬은 `10`으로 바꿔서 쓴다.
+
+### 기타
+
 - `Closes #12` 같은 키워드는 PR이 **기본 브랜치**에 머지될 때만 이슈를 닫는다. 그래서 기본 브랜치를 `develop`으로 둔다 ([BRANCH_STRATEGY](../../../docs/conventions/BRANCH_STRATEGY.md)).
+- PR이 머지되어 이슈가 닫히면 프로젝트 워크플로우가 Status를 `Done`으로 바꾼다.
 
 ## 3. 라벨
 

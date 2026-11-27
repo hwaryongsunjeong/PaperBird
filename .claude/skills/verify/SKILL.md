@@ -8,6 +8,8 @@ argument-hint: "<PR번호> <대상 SHA>"
 
 입력: `$ARGUMENTS` (PR 번호, 대상 SHA)
 
+> 인자의 `#`은 떼고 숫자만 쓴다 (예: `#10` → `10`). 셸에서 `#`은 주석이다 — workflow.md §2.
+
 이 세션은 **검증자**다. 코드를 수정하거나 커밋하지 않는다. 세부 규칙은 `tracks/fullstack/docs/test-agent-rules.md`를 따른다.
 
 ## 1. 자격 확인
